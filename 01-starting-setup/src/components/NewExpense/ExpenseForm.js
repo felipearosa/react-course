@@ -1,6 +1,10 @@
-import './ExpenseForm.css'
+import { useState } from 'react';
+import './ExpenseForm.css';
 
 const ExpenseForm = () => {
+  const [enteredTitle, setEnteredTitle] = useState('');
+
+
   return (
     <form>
       <div className="new-expense__controls">
@@ -18,7 +22,7 @@ const ExpenseForm = () => {
         </div>
       </div>
       <div className="new-expense__actions">
-        <button type="submit">Add Expense</button>
+        <button type="submit ">Add Expense</button>
       </div>
     </form>
   )
