@@ -45,7 +45,7 @@ const Login = (props) => {
       setFormIsValid(
         emailIsValid && passwordIsValid
       );
-    }, 1000);
+    },  500);
 
 
     return () => {
