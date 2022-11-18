@@ -5,7 +5,7 @@ import classes from './Modal.module.css'
 
 const Backdrop = props => {
   return (
-    <div className={classes.backdrop}></div>
+    <div onClick={props.onHideCart} className={classes.backdrop}></div>
     )
 }
 
@@ -22,7 +22,7 @@ const overlay = document.getElementById('overlay')
 const Modal = props => {
   return(
     <Fragment>
-      {ReactDOM.createPortal(<Backdrop />, overlay)}
+      {ReactDOM.createPortal(<Backdrop onHideCart={props.onHideCart} />, overlay)}
       {ReactDOM.createPortal(<ModalOverlay>{props.children}</ModalOverlay>, overlay)}
     </Fragment>
   )
