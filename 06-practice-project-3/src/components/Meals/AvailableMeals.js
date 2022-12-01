@@ -4,7 +4,8 @@ import MealItem from './MealItem/MealItem';
 import { useEffect, useState } from 'react';
 
 const AvailableMeals = () => {
-  const [meals, setMeals] = useState('')
+  const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -13,14 +14,22 @@ const AvailableMeals = () => {
 
       const finalMeals = [];
 
-      for(const key in meals){
+      for (const key in meals) {
         finalMeals.push(<MealItem id={key} key={key} name={meals[key].name} description={meals[key].description} price={meals[key].price} />)
       }
       setMeals(finalMeals)
+      setIsLoading(false)
     }
     fetchMeals();
   }, [])
 
+  if (isLoading) {
+    return (
+      <section className={classes['meals-loading']} >
+        <p>Loading...</p>
+      </section>
+    )
+  }
 
   return (
     <div className={classes.meals}>
