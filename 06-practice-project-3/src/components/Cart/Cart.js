@@ -28,6 +28,17 @@ const Cart = props => {
     setCheckingOut(true);
   }
 
+  const submitOrderHandler = async (userData) => {
+    await fetch('https://react-course-e2fa3-default-rtdb.firebaseio.com/orders.json', {
+      method: 'POST',
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items
+      }),
+
+    })
+  }
+
   const btns = <div className={classes.actions}>
   <button onClick={props.onHideCart} className={classes['button--alt']}>Close</button>
   {hasItems && <button onClick={orderHandler} className={classes.button}>Order</button>}
@@ -40,7 +51,7 @@ const Cart = props => {
         <span>Total Amount</span>
         <span>{totalAmout}</span>
       </div>
-      {isCheckingOut && <Checkout closeModal={props.onHideCart} />}
+      {isCheckingOut && <Checkout onConfirm={submitOrderHandler} closeModal={props.onHideCart} />}
       {!isCheckingOut && btns}
     </Modal>
   )
