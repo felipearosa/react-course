@@ -1,6 +1,6 @@
 const redux = require('redux');
 
-const counterRedux = (state, action) => {
+const counterRedux = (state = { counter: 0 }, action) => {
   if (action.type === 'increment') {
     return {
       counter: state.counter + 1
@@ -16,6 +16,6 @@ const counterRedux = (state, action) => {
   return state;
 };
 
-const store = redux.configureStore(counterRedux);
+const store = redux.createStore(counterRedux);
 
 export default store;
