@@ -16,6 +16,6 @@ const counterRedux = (state, action) => {
   return state;
 };
 
-const store = redux.configureStore(reduxReducer);
+const store = redux.configureStore(counterRedux);
 
 export default store;
