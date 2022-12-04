@@ -1,4 +1,4 @@
-const redux = require('redux');
+const redux = require('@reduxjs/toolkit');
 
 const initialState = {
   counter: 0,
