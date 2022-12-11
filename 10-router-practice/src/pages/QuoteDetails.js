@@ -26,6 +26,7 @@ const QuoteDetails = () => {
     )
   }
 
+  console.log(match.path)
   if (status === 'error') {
     return (
       <p className='centered focused'>{error}</p>
@@ -41,7 +42,7 @@ const QuoteDetails = () => {
       <HighlightedQuote text={loadedQuote.text} author={loadedQuote.author} />
       <Route path={match.path} exact>
         <div className="centered">
-          <Link className="btn--flat" to={`${match.path}}/comments`}>Load Comments</Link>
+          <Link className="btn--flat" to={`${match.url}/comments`}>Load Comments</Link>
         </div>
       </Route>
       <Route path={`${match.path}/comments`}>
