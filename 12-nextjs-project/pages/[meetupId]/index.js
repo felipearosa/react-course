@@ -1,3 +1,4 @@
+import { MongoClient, ObjectId } from 'mongodb'
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 
 const dummyMeetupDetail = {
@@ -15,31 +16,44 @@ const MeetupDetailPage = props => {
 }
 
 export async function getStaticPaths() {
+  const client = await MongoClient.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PS}@cluster0.9hvl57g.mongodb.net/meetups?retryWrites=true&w=majority`);
+  const db = client.db();
+
+  const meetupsCollection = db.collection('meetups');
+
+  const results = await meetupsCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
+
   return {
     fallback: false,
-    paths: [
+    paths: results.map(meetup => (
       {
         params: {
-          meetupId: 'm1'
-        }
-      },
-      {
-        params: {
-          meetupId: 'm2'
+          meetupId: meetup._id.toString()
         }
       }
-    ]
+    ))
   }
 }
 
 export async function getStaticProps(context) {
-  const meetupId = context.params.meetupId;
+  const objectMeetupid = new ObjectId(context.params.meetupId)
+  const client = await MongoClient.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PS}@cluster0.9hvl57g.mongodb.net/meetups?retryWrites=true&w=majority`);
+
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+
+
+  const meetup = await meetupsCollection.findOne({ _id: objectMeetupid });
+
+  client.close();
 
   return {
     props: {
       meetupData: {
-        ...dummyMeetupDetail,
-        id: meetupId
+        ...meetup,
+        _id: null
       }
     }
   }

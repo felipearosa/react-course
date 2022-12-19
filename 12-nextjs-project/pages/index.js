@@ -1,31 +1,34 @@
+import { MongoClient } from 'mongodb'
+
 import { useEffect, useState } from 'react'
 import MeetupList from './../components/meetups/MeetupList'
 
-const DUMMY_MEETUPS = [
-   {
-    id: 'm1',
-    title: 'First meetup',
-    image: "https://images.adsttc.com/media/images/609d/cdea/f043/cc01/64ff/8c5b/slideshow/03-arquivo-publico-do-estado-de-sao-paulo-memoria-publica-sem-informacao-de-autor-1961.jpg",
-    address : 'Some address, Santos, SP',
-    description: 'This is the first meeting'
-   },
-   {
-    id: 'm2',
-    title: 'Second meetup',
-    image: "https://images.adsttc.com/media/images/609d/cdea/f043/cc01/64ff/8c5b/slideshow/03-arquivo-publico-do-estado-de-sao-paulo-memoria-publica-sem-informacao-de-autor-1961.jpg",
-    address : 'Some other address, Santos, SP',
-    description: 'This is the second meeting'
-   }
-]
 
 const HomePage = props => {
-  return <MeetupList meetups={props.meetUp}/>
+  return <MeetupList meetups={props.meetUps} />
 }
 
-export async function getStaticProps () {
+export async function getStaticProps() {
+
+  const client = await MongoClient.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PS}@cluster0.9hvl57g.mongodb.net/meetups?retryWrites=true&w=majority`);
+
+  const db = client.db();
+
+  const meetupsCollection = db.collection('meetups');
+
+  const meetUps = await meetupsCollection.find().toArray();
+
+  client.close();
+
   return {
     props: {
-      meetUp: DUMMY_MEETUPS
+      meetUps: meetUps.map(meetup => ({
+        title: meetup.title,
+        image: meetup.image,
+        description: meetup.description,
+        address: meetup.address,
+        id: meetup._id.toString()
+      }))
     },
     revalidate: 10
   }
