@@ -1,11 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Todos from './components/Todos';
+import Todo from './models/Todo';
 
 function App() {
+  const todoItems = [
+    new Todo('Learning TS'),
+    new Todo('Learning React'),
+  ]
+
   return (
-    <Todos items={['Learning TS', 'Learning React']}/>
+    <Todos items={todoItems}/>
   );
 }
 
