@@ -1,8 +1,9 @@
 import Todo from "../models/Todo"
+import styles from './TodoComponent.module.css'
 
-const TodoComponent: React.FC<{item: Todo}> = (props) => {
+const TodoComponent: React.FC<{ item: Todo, onRemoveItem: () => void }> = (props) => {
   return (
-    <li key={props.item.id}>{props.item.text}</li>
+    <li onClick={props.onRemoveItem} className={styles.item} >{props.item.text}</li>
   )
 }
 
