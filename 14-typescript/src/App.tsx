@@ -1,15 +1,25 @@
+import { Fragment, useState } from 'react';
 import './App.css';
+import NewTodo from './components/NewTodo';
 import Todos from './components/Todos';
 import Todo from './models/Todo';
 
 function App() {
-  const todoItems = [
-    new Todo('Learning TS'),
-    new Todo('Learning React'),
-  ]
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const addTodo = (item: string) => {
+    const newTodo = new Todo(item);
+
+    setTodos(previousState => {
+      return [...previousState, newTodo]
+    })
+  }
 
   return (
-    <Todos items={todoItems}/>
+    <Fragment>
+      <Todos items={todos} />
+      <NewTodo onAddToDo={addTodo} />
+    </Fragment>
   );
 }
 
