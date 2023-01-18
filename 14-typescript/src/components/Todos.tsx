@@ -1,9 +1,10 @@
 import Todo from "../models/Todo"
+import TodoComponent from "./TodoComponent"
 
 const Todos: React.FC<{items: Todo[]}> = (props) => {
   return (
     <div>
-      {props.items.map(item => <li key={item.id}>{item.text}</li>)}
+      {props.items.map(item => <TodoComponent item={item} />)}
     </div>
   )
 
