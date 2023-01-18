@@ -15,10 +15,17 @@ function App() {
     })
   }
 
+  const removeItem = (item: Todo) => {
+    setTodos(previousState => {
+      const newState = previousState.filter(todo => todo !== item)
+      return newState;
+    })
+  }
+
   return (
     <Fragment>
       <NewTodo onAddToDo={addTodo} />
-      <Todos items={todos} />
+      <Todos items={todos} onRemove={removeItem} />
     </Fragment>
   );
 }
