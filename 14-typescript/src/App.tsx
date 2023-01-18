@@ -17,8 +17,8 @@ function App() {
 
   return (
     <Fragment>
-      <Todos items={todos} />
       <NewTodo onAddToDo={addTodo} />
+      <Todos items={todos} />
     </Fragment>
   );
 }
